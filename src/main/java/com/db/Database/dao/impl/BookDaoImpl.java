@@ -3,6 +3,12 @@ package com.db.Database.dao.impl;
 import com.db.Database.dao.BookDao;
 import com.db.Database.domain.Book;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
 
 public class BookDaoImpl implements BookDao {
     private final JdbcTemplate jdbcTemplate;
@@ -21,4 +27,24 @@ public class BookDaoImpl implements BookDao {
         );
     }
 
+    @Override
+    public Optional<Book> find(String isbn) {
+        List<Book> results = jdbcTemplate.query(
+                "SELECT isbn, author_id, title from books WHERE isbn = ? LIMIT 1",
+                new BookRowMapper(), isbn);
+
+        return results.stream().findFirst();
+    }
+
+    public static class BookRowMapper implements RowMapper<Book> {
+
+        @Override
+        public Book mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return Book.builder()
+                    .isbn(rs.getString("isbn"))
+                    .title(rs.getString("title"))
+                    .authorId(rs.getLong("author_id"))
+                    .build();
+        }
+    }
 }

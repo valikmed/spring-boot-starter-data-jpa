@@ -1,10 +1,11 @@
-package com.db.Database.dao;
+package com.db.Database.dao.impl;
 
 
-import com.db.Database.dao.impl.AuthorDaoImpl;
+import com.db.Database.TestDataUtil;
 import com.db.Database.domain.Author;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -24,11 +25,7 @@ public class AuthorDaoImplTests {
 
     @Test
     public void testThatCreateAuthorGeneratesCorrectSql() {
-        Author author = Author.builder()
-                .id(1L)
-                .name("Abigail Rose")
-                .age(80)
-                .build();
+        Author author = TestDataUtil.createTestAuthor();
 
         underTest.create(author);
 
@@ -37,4 +34,15 @@ public class AuthorDaoImplTests {
                 eq(1L), eq("Abigail Rose"), eq(80)
         );
     }
+
+    @Test
+    public void FindTestThatFindOneGaneratesSgl() {
+        underTest.findOne(1L);
+        verify(jdbcTemplate).query(
+                eq("SELECT id, name, age FROM authors WHERE id = ? LIMIT 1"),
+                ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any(),
+                eq(1L)
+        );
+    }
+
 }
