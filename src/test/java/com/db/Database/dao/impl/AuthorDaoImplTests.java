@@ -31,7 +31,7 @@ public class AuthorDaoImplTests {
 
         verify(jdbcTemplate).update(
                 eq("INSERT INTO authors (id, name, age) VALUES (?, ?, ?)"),
-                eq(1L), eq("Abigail Rose"), eq(80)
+                eq(1L), eq("Abigail Rose"), eq(40)
         );
     }
 
