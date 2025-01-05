@@ -25,7 +25,9 @@ public class AuthorDaoImpl implements AuthorDao {
     public void create(Author author) {
         jdbcTemplate.update(
                 "INSERT INTO authors (id, name, age) VALUES (?, ?, ?)",
-                author.getId(), author.getName(), author.getAge()
+                author.getId(),
+                author.getName(),
+                author.getAge()
         );
     }
 
@@ -52,6 +54,14 @@ public class AuthorDaoImpl implements AuthorDao {
         jdbcTemplate.update(
                 "UPDATE authors SET id = ?, name = ?, age = ? WHERE id = ?",
                 author.getId(), author.getName(), author.getAge(), id
+        );
+    }
+
+    @Override
+    public void delete(long id) {
+        jdbcTemplate.update(
+                "DELETE FROM authors where id = ?",
+                id
         );
     }
 

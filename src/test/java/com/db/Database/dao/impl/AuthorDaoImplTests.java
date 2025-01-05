@@ -46,7 +46,7 @@ public class AuthorDaoImplTests {
     }
 
     @Test
-    public void testThatFindMany() {
+    public void testThatFindManyGeneratesCorrectSql() {
         underTest.find();
         verify(jdbcTemplate).query(
                 eq("SELECT id, name, age FROM authors"),
@@ -65,5 +65,14 @@ public class AuthorDaoImplTests {
         );
     }
 
+    @Test
+    public void testThatDeleteGeneratesCorrectSql(){
+        underTest.delete(1L);
+
+        verify(jdbcTemplate).update(
+                "DELETE FROM authors where id = ?",
+                1L
+        );
+    }
 }
 
