@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.db</groupId>
-	<artifactId>Database</artifactId>
+	<artifactId>spring-boot-starter-data-jpa</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Database</name>
-	<description>Connectino to the Postgresql DB</description>
+	<description>Connection to the PostgreSQL DB</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -32,7 +32,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jdbc</artifactId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
